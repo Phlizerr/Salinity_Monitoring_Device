@@ -1,0 +1,5 @@
+.DS_Store
+gambia_sensor/secrets.h
+build/
+*.bin
+*.elf

@@ -9,6 +9,12 @@
 #include <Preferences.h>
 #include "battery_cal.h"   // per-device battery ADC gain/offset
 
+// Firmware version (semver: MAJOR.MINOR.PATCH). Bump it with every release, add
+// an entry to CHANGELOG.md and tag the commit vX.Y.Z so a deployed device can
+// be traced back to its exact source. Shown on the boot splash, the serial boot
+// line, `help` and the web console header.
+#define FW_VERSION "1.0.0"
+
 // ================== OLED DISPLAY I2C (SSD1306 128x64) ==================
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -1500,6 +1506,8 @@ void displayInit() {
   display.print(F("monitoring device"));
   display.setCursor(4, 42);
   display.print(F("TFM - Sebastian"));
+  display.setCursor(4, 53);
+  display.print(F("fw v" FW_VERSION));
   display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE);
   display.display();
 }
@@ -3343,7 +3351,7 @@ td .raw{color:var(--warn);font-size:10px;margin-left:4px}
 .empty{color:var(--dim);font-size:12.5px;padding:10px 2px}
 .hide{display:none}
 </style></head><body>
-<header><span id=dot></span><h1>Gambia Salinity Monitor</h1>
+<header><span id=dot></span><h1>Gambia Salinity Monitor <small style="color:var(--dim);font-weight:400">v)HTML" FW_VERSION R"HTML(</small></h1>
 <span class=badge id=mode>connecting</span>
 <span class=sp></span><button class=ico id=theme title="Light / dark">&#9681;</button></header>
 <main>
@@ -4155,6 +4163,7 @@ void faultReport(Stream& out) {
 }
 
 void printHelp(Stream& out) {
+  out.println(F("Gambia salinity monitor - firmware v" FW_VERSION));
   out.println(F("Available commands:"));
   out.println(F("  help        - show this list"));
   out.println(F("  coef        - print the coefficients of the curve in use"));
@@ -5471,6 +5480,7 @@ void setup() {
   // 10k pull-ups on the board, so no pinMode configuration is needed for them.
   batteryInit();
   delay(2000);
+  Serial.println(F("Gambia salinity monitor - firmware v" FW_VERSION));
 
   // The radio stays off at boot; wifiTick() brings it up per policy (default:
   // only while USB-C power is present, so the field power budget is untouched).

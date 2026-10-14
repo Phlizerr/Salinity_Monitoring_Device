@@ -5,6 +5,10 @@ Firmware for an **ESP32**-based field device that measures **water temperature**
 **LoRaWAN** to **The Things Network (TTN)**. Built as part of a TFM (Master's thesis)
 project for water monitoring in The Gambia.
 
+**Firmware version: 1.0.0** — set by `FW_VERSION` in [`gambia_sensor.ino`](gambia_sensor.ino), shown on the
+boot splash, the serial boot line, `help` and the web console header. Each release is tagged
+`vX.Y.Z` in git; see [`CHANGELOG.md`](../CHANGELOG.md) for what changed between versions.
+
 Source: [`gambia_sensor.ino`](gambia_sensor.ino) · Command reference: [`COMMANDS.md`](COMMANDS.md)
 
 ---
